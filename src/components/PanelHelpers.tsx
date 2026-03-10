@@ -1,9 +1,12 @@
 // ─── Shared Panel Helpers ──────────────────────────────────
 // SectionHeader, Tag, Stars — used across multiple panels.
 
-import { THEME } from "../config/portfolio.config";
+"use client";
+
+import { useTheme } from "../context/ThemeContext";
 
 export function SectionHeader({ label }: { label: string }) {
+  const { theme } = useTheme();
   return (
     <div
       style={{
@@ -17,7 +20,7 @@ export function SectionHeader({ label }: { label: string }) {
         style={{
           width: 8,
           height: 8,
-          background: THEME.accent,
+          background: theme.accent,
           transform: "rotate(45deg)",
           flexShrink: 0,
         }}
@@ -26,7 +29,7 @@ export function SectionHeader({ label }: { label: string }) {
         style={{
           fontFamily: "'Orbitron', sans-serif",
           fontSize: "11px",
-          color: THEME.text.primary,
+          color: theme.text.primary,
           letterSpacing: "4px",
           fontWeight: 700,
         }}
@@ -37,7 +40,7 @@ export function SectionHeader({ label }: { label: string }) {
         style={{
           flex: 1,
           height: "1px",
-          background: `linear-gradient(90deg, rgba(${THEME.accentRgb}, 0.4), transparent)`,
+          background: `linear-gradient(90deg, rgba(${theme.accentRgb}, 0.4), transparent)`,
         }}
       />
     </div>
@@ -51,18 +54,19 @@ export function Tag({
   children: React.ReactNode;
   amber?: boolean;
 }) {
+  const { theme } = useTheme();
   return (
     <span
       style={{
         display: "inline-block",
         padding: "3px 10px",
-        border: `1px solid ${amber ? `rgba(${THEME.accentRgb}, 0.4)` : `rgba(${THEME.accentRgb}, 0.2)`}`,
+        border: `1px solid ${amber ? `rgba(${theme.accentRgb}, 0.4)` : `rgba(${theme.accentRgb}, 0.2)`}`,
         borderRadius: "2px",
         fontSize: "11px",
-        color: amber ? THEME.accent : THEME.text.secondary,
+        color: amber ? theme.accent : theme.text.secondary,
         background: amber
-          ? `rgba(${THEME.accentRgb}, 0.08)`
-          : `rgba(${THEME.accentRgb}, 0.04)`,
+          ? `rgba(${theme.accentRgb}, 0.08)`
+          : `rgba(${theme.accentRgb}, 0.04)`,
         letterSpacing: "0.5px",
         margin: "3px 3px 3px 0",
         fontFamily: "'Rajdhani', sans-serif",
@@ -83,6 +87,7 @@ export function Stars({
   total?: number;
   size?: number;
 }) {
+  const { theme } = useTheme();
   return (
     <div style={{ display: "flex", gap: "3px" }}>
       {Array.from({ length: total }, (_, i) => (
@@ -91,13 +96,13 @@ export function Stars({
             points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
             fill={
               i < filled
-                ? THEME.accent
-                : `rgba(${THEME.accentRgb}, 0.2)`
+                ? theme.accent
+                : `rgba(${theme.accentRgb}, 0.2)`
             }
             stroke={
               i < filled
-                ? THEME.accent
-                : `rgba(${THEME.accentRgb}, 0.15)`
+                ? theme.accent
+                : `rgba(${theme.accentRgb}, 0.15)`
             }
             strokeWidth="1"
           />

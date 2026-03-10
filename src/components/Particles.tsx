@@ -1,11 +1,14 @@
 // ─── Particle Background Canvas ─────────────────────────────
 // Floating particles for atmosphere. Uses config for color and count.
 
+"use client";
+
 import { useRef, useEffect } from "react";
-import { THEME } from "../config/portfolio.config";
+import { useTheme } from "../context/ThemeContext";
 
 export default function Particles() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const c = canvasRef.current;
@@ -27,7 +30,7 @@ export default function Particles() {
 
     const init = () => {
       resize();
-      particles = Array.from({ length: THEME.particles.count }, () => ({
+      particles = Array.from({ length: theme.particles.count }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
         r: Math.random() * 2 + 0.5,
@@ -48,7 +51,7 @@ export default function Particles() {
         if (p.y > h) p.y = 0;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${THEME.particles.color}, ${p.o})`;
+        ctx.fillStyle = `rgba(${theme.particles.color}, ${p.o})`;
         ctx.fill();
       });
       raf = requestAnimationFrame(draw);
@@ -62,7 +65,7 @@ export default function Particles() {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [theme]);
 
   return (
     <canvas

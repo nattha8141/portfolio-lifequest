@@ -1,12 +1,14 @@
 // ─── Game Portfolio — Main Page Component ───────────────────
-// 3-column layout: Avatar | HexNav | Content Panel
+// 2-column layout: Avatar | HexNav + Content Panel
 
 "use client";
 
 import { useState, useEffect } from "react";
-import { SOCIALS, TABS, THEME } from "../config/portfolio.config";
+import { SOCIALS, TABS } from "../config/portfolio.config";
+import { ThemeProvider, useTheme } from "../context/ThemeContext";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { FiSun, FiMoon } from "react-icons/fi";
 
 import Particles from "../components/Particles";
 import Avatar from "../components/Avatar";
@@ -42,25 +44,26 @@ function HexNav({
   active: string;
   setActive: (id: string) => void;
 }) {
+  const { theme } = useTheme();
   return (
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "row",
         alignItems: "center",
         position: "relative",
-        padding: "8px 0",
+        padding: "0 8px",
       }}
     >
       <div
         style={{
           position: "absolute",
-          top: 48,
-          bottom: 48,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: 1,
-          background: `linear-gradient(180deg, transparent, ${THEME.accent} 20%, ${THEME.accent} 80%, transparent)`,
+          left: 48,
+          right: 48,
+          top: "50%",
+          transform: "translateY(-50%)",
+          height: 1,
+          background: `linear-gradient(90deg, transparent, ${theme.accent} 20%, ${theme.accent} 80%, transparent)`,
           opacity: 0.25,
           zIndex: 0,
         }}
@@ -73,7 +76,7 @@ function HexNav({
             style={{
               position: "relative",
               zIndex: 1,
-              marginBottom: idx < TABS.length - 1 ? "6px" : 0,
+              marginRight: idx < TABS.length - 1 ? "6px" : 0,
             }}
           >
             <div
@@ -92,7 +95,7 @@ function HexNav({
                 viewBox="0 0 78 70"
                 style={{
                   filter: isA
-                    ? `drop-shadow(0 0 6px ${THEME.accent}80)`
+                    ? `drop-shadow(0 0 6px ${theme.accent}80)`
                     : "none",
                   transition: "filter 0.3s",
                 }}
@@ -101,11 +104,11 @@ function HexNav({
                   points={hexPoints(39, 35, 32)}
                   fill={
                     isA
-                      ? `rgba(${THEME.accentRgb}, 0.12)`
-                      : `rgba(22,22,27,0.9)`
+                      ? `rgba(${theme.accentRgb}, 0.12)`
+                      : `rgba(${theme.accentRgb}, 0.05)`
                   }
                   stroke={
-                    isA ? THEME.accent : `rgba(${THEME.accentRgb}, 0.25)`
+                    isA ? theme.accent : `rgba(${theme.accentRgb}, 0.25)`
                   }
                   strokeWidth={isA ? 1.5 : 1}
                   style={{ transition: "all 0.3s" }}
@@ -114,7 +117,7 @@ function HexNav({
                   <polygon
                     points={hexPoints(39, 35, 26)}
                     fill="none"
-                    stroke={THEME.accent}
+                    stroke={theme.accent}
                     strokeWidth="0.5"
                     opacity="0.4"
                   />
@@ -124,7 +127,7 @@ function HexNav({
                   y="30"
                   textAnchor="middle"
                   fill={
-                    isA ? THEME.accent : `rgba(${THEME.accentRgb}, 0.6)`
+                    isA ? theme.accent : `rgba(${theme.accentRgb}, 0.6)`
                   }
                   fontSize="13"
                   style={{ transition: "fill 0.3s" }}
@@ -135,7 +138,7 @@ function HexNav({
                   x="39"
                   y="48"
                   textAnchor="middle"
-                  fill={isA ? "#e8e4de" : "#6a6a70"}
+                  fill={isA ? theme.text.primary : theme.text.muted}
                   fontSize="6.5"
                   fontFamily="Orbitron, sans-serif"
                   fontWeight="700"
@@ -150,8 +153,8 @@ function HexNav({
                   fontFamily: "'Orbitron', sans-serif",
                   fontSize: "7px",
                   color: isA
-                    ? THEME.accent
-                    : `rgba(${THEME.accentRgb}, 0.3)`,
+                    ? theme.accent
+                    : `rgba(${theme.accentRgb}, 0.3)`,
                   letterSpacing: "2px",
                   transition: "color 0.3s",
                 }}
@@ -163,10 +166,10 @@ function HexNav({
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "column",
+                  flexDirection: "row",
                   alignItems: "center",
                   gap: "4px",
-                  padding: "4px 0",
+                  padding: "0 4px",
                 }}
               >
                 {[0, 1, 2].map((d) => (
@@ -176,7 +179,7 @@ function HexNav({
                       width: 2,
                       height: 2,
                       borderRadius: "50%",
-                      background: THEME.accent,
+                      background: theme.accent,
                       opacity:
                         isA || active === TABS[idx + 1]?.id ? 0.5 : 0.12,
                       transition: "opacity 0.3s",
@@ -192,7 +195,40 @@ function HexNav({
   );
 }
 
-export default function GamePortfolio() {
+// ── Theme Toggle Button ──
+function ThemeToggle() {
+  const { isDark, toggleTheme, theme } = useTheme();
+  return (
+    <button
+      onClick={toggleTheme}
+      title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      style={{
+        position: "fixed",
+        top: 20,
+        right: 20,
+        zIndex: 100,
+        width: 38,
+        height: 38,
+        border: `1px solid rgba(${theme.accentRgb}, 0.3)`,
+        borderRadius: "50%",
+        background: theme.background.secondary,
+        color: theme.accent,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+        fontSize: 18,
+        transition: "all 0.3s",
+        boxShadow: `0 2px 10px rgba(0,0,0,0.2)`,
+      }}
+    >
+      {isDark ? <FiSun /> : <FiMoon />}
+    </button>
+  );
+}
+
+function GamePortfolioInner() {
+  const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState(TABS[0]?.id || "profile");
   const [loaded, setLoaded] = useState(false);
 
@@ -223,11 +259,12 @@ export default function GamePortfolio() {
         }
 
         .portfolio-root {
-          background: ${THEME.background.primary};
+          background: ${theme.background.primary};
           min-height: 100vh;
           font-family: 'Rajdhani', sans-serif;
-          color: ${THEME.text.secondary};
+          color: ${theme.text.secondary};
           position: relative;
+          transition: background 0.4s, color 0.4s;
         }
 
         .portfolio-grid {
@@ -235,7 +272,7 @@ export default function GamePortfolio() {
           margin: 0 auto;
           padding: 28px 24px;
           display: grid;
-          grid-template-columns: 380px 96px 1fr;
+          grid-template-columns: 380px 1fr;
           gap: 36px;
           min-height: 100vh;
           align-items: start;
@@ -255,18 +292,18 @@ export default function GamePortfolio() {
         }
 
         .nav-col {
-          position: sticky;
-          top: 24px;
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
           align-items: center;
-          padding-top: 12px;
+          justify-content: center;
+          gap: 4px;
+          padding: 0;
         }
 
         .content-col {
-          border: 1px solid rgba(${THEME.accentRgb}, 0.15);
+          border: 1px solid rgba(${theme.accentRgb}, 0.15);
           border-radius: 6px;
-          background: ${THEME.panel};
+          background: ${theme.panel};
           box-shadow: 0 2px 20px rgba(0,0,0,0.3);
           opacity: 0;
           transform: translateX(20px);
@@ -282,15 +319,15 @@ export default function GamePortfolio() {
           justify-content: space-between;
           align-items: center;
           padding: 10px 18px;
-          border-bottom: 1px solid rgba(${THEME.accentRgb}, 0.12);
-          background: rgba(${THEME.accentRgb}, 0.04);
+          border-bottom: 1px solid rgba(${theme.accentRgb}, 0.12);
+          background: rgba(${theme.accentRgb}, 0.04);
           border-radius: 6px 6px 0 0;
         }
 
         .panel-topbar-label {
           font-family: 'Orbitron', sans-serif;
           font-size: 10px;
-          color: ${THEME.accent};
+          color: ${theme.accent};
           letter-spacing: 3px;
           font-weight: 700;
         }
@@ -311,35 +348,35 @@ export default function GamePortfolio() {
         }
 
         .panel-content::-webkit-scrollbar { width: 4px; }
-        .panel-content::-webkit-scrollbar-track { background: ${THEME.background.secondary}; }
-        .panel-content::-webkit-scrollbar-thumb { background: rgba(${THEME.accentRgb}, 0.4); border-radius: 2px; }
+        .panel-content::-webkit-scrollbar-track { background: ${theme.background.secondary}; }
+        .panel-content::-webkit-scrollbar-thumb { background: rgba(${theme.accentRgb}, 0.4); border-radius: 2px; }
 
         .social-row {
           display: flex;
           justify-content: center;
           gap: 12px;
           padding: 10px 14px 14px;
-          border-top: 1px solid rgba(${THEME.accentRgb}, 0.12);
+          border-top: 1px solid rgba(${theme.accentRgb}, 0.12);
         }
 
         .social-btn {
           cursor: pointer;
           width: 32px; height: 32px;
-          border: 1px solid rgba(${THEME.accentRgb}, 0.2);
+          border: 1px solid rgba(${theme.accentRgb}, 0.2);
           border-radius: 4px;
           display: flex;
           align-items: center;
           justify-content: center;
-          background: ${THEME.background.secondary};
-          color: ${THEME.text.secondary};
+          background: ${theme.background.secondary};
+          color: ${theme.text.secondary};
           font-size: 15px;
           text-decoration: none;
           transition: all 0.2s;
         }
         .social-btn:hover {
-          border-color: ${THEME.accent};
-          background: rgba(${THEME.accentRgb}, 0.1);
-          color: ${THEME.text.primary};
+          border-color: ${theme.accent};
+          background: rgba(${theme.accentRgb}, 0.1);
+          color: ${theme.text.primary};
         }
 
         @keyframes slideIn {
@@ -364,13 +401,8 @@ export default function GamePortfolio() {
             grid-template-columns: 1fr;
             padding: 16px;
           }
-          .avatar-col, .nav-col {
+          .avatar-col {
             position: static;
-          }
-          .nav-col {
-            flex-direction: row;
-            justify-content: center;
-            padding: 0;
           }
           .panel-content {
             max-height: none;
@@ -381,6 +413,7 @@ export default function GamePortfolio() {
       <div className="portfolio-root">
         <div className="grain-overlay" />
         <Particles />
+        <ThemeToggle />
 
         <div className="portfolio-grid">
           {/* COL 1: Avatar */}
@@ -432,38 +465,47 @@ export default function GamePortfolio() {
             </div>
           </div>
 
-          {/* COL 2: Hex Nav */}
-          <div className="nav-col">
-            <HexNav active={activeTab} setActive={setActiveTab} />
-          </div>
-
-          {/* COL 3: Content Panel */}
-          <div className={`content-col ${loaded ? "loaded" : ""}`}>
-            <div className="panel-topbar">
-              <div className="panel-topbar-label">
-                {TABS.find((t) => t.id === activeTab)?.label}
-              </div>
-              <div className="panel-topbar-dots">
-                {["◈", "◎", "△"].map((s, i) => (
-                  <span
-                    key={i}
-                    className="panel-topbar-dot"
-                    style={{
-                      color: THEME.accent,
-                      opacity: 0.2 + i * 0.15,
-                    }}
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
+          {/* COL 2: Hex Nav + Content Panel */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <div className="nav-col">
+              <HexNav active={activeTab} setActive={setActiveTab} />
             </div>
-            <div className="panel-content" key={activeTab}>
-              <ActivePanel />
+
+            <div className={`content-col ${loaded ? "loaded" : ""}`}>
+              <div className="panel-topbar">
+                <div className="panel-topbar-label">
+                  {TABS.find((t) => t.id === activeTab)?.label}
+                </div>
+                <div className="panel-topbar-dots">
+                  {["◈", "◎", "△"].map((s, i) => (
+                    <span
+                      key={i}
+                      className="panel-topbar-dot"
+                      style={{
+                        color: theme.accent,
+                        opacity: 0.2 + i * 0.15,
+                      }}
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="panel-content" key={activeTab}>
+                <ActivePanel />
+              </div>
             </div>
           </div>
         </div>
       </div>
     </>
+  );
+}
+
+export default function GamePortfolio() {
+  return (
+    <ThemeProvider>
+      <GamePortfolioInner />
+    </ThemeProvider>
   );
 }

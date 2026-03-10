@@ -177,7 +177,7 @@ export const QUESTS = [
     type: "Completed",
     desc: "Developed generative AI-powered tools that transformed Internal Audit Group workflows at Grab Holdings. Awarded Grab CEO Award 2025.",
     tags: ["GenAI", "Python", "Audit", "Automation"],
-    reward: "CEO Award",
+    reward: "+1500 EXP",
     link: "",
   },
   {
@@ -201,7 +201,7 @@ export const QUESTS = [
     type: "Completed",
     desc: "Designed inclusive learning tools for hearing-impaired students using design thinking methodology. Awarded PITTA Grant for international publication.",
     tags: ["Design Thinking", "UX Research", "Accessibility"],
-    reward: "PITTA Grant",
+    reward: "+1200 EXP",
     link: "",
   },
   {
@@ -218,7 +218,7 @@ export const QUESTS = [
     desc: "Building an immersive Arknights-inspired gamified portfolio to showcase career and skills.",
     tags: ["Next.js", "TypeScript", "Game UI"],
     reward: "+1000 EXP",
-    link: "",
+    link: "https://github.com/nattha8141/portfolio-lifequest",
   },
 ];
 
@@ -227,14 +227,14 @@ export const QUESTS = [
 // type: "Weapon" (primary tools) | "Armor" (frameworks) | "Accessory" (utilities)
 // rarity: 5 (legendary/gold) | 4 (epic/purple) | 3 (rare/blue) | 2 (uncommon/green)
 export const INVENTORY = [
-  { name: "Python", icon: "🐍", stars: 5, filled: 5 },
-  { name: "KNIME", icon: "⚙️", stars: 5, filled: 5 },
-  { name: "Power BI", icon: "📊", stars: 5, filled: 5 },
-  { name: "AWS", icon: "☁️", stars: 5, filled: 4 },
-  { name: "GenAI", icon: "🤖", stars: 5, filled: 5 },
-  { name: "SQL", icon: "🗄️", stars: 5, filled: 4 },
-  { name: "CEH", icon: "🔐", stars: 5, filled: 4 },
-  { name: "Git", icon: "⚡", stars: 5, filled: 3 },
+  { name: "Python", icon: "python", stars: 5, filled: 5 },
+  { name: "KNIME", icon: "knime", stars: 5, filled: 5 },
+  { name: "Power BI", icon: "powerbi", stars: 5, filled: 5 },
+  { name: "AWS", icon: "aws", stars: 5, filled: 4 },
+  { name: "GenAI", icon: "genai", stars: 5, filled: 5 },
+  { name: "SQL", icon: "sql", stars: 5, filled: 4 },
+  { name: "CEH", icon: "ceh", stars: 5, filled: 4 },
+  { name: "Git", icon: "git", stars: 5, filled: 3 },
 ];
 
 // ─── SKILL DOMAINS (Skills Tab — Mind Map) ─────────────────

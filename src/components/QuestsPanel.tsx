@@ -1,10 +1,14 @@
 // ─── Quests Panel ───────────────────────────────────────────
 // Projects displayed as quest entries with status badges.
 
-import { QUESTS, THEME } from "../config/portfolio.config";
+"use client";
+
+import { QUESTS } from "../config/portfolio.config";
+import { useTheme } from "../context/ThemeContext";
 import { SectionHeader, Tag } from "./PanelHelpers";
 
 export default function QuestsPanel() {
+  const { theme } = useTheme();
   return (
     <div>
       <SectionHeader label="QUEST LOG" />
@@ -16,7 +20,7 @@ export default function QuestsPanel() {
               key={i}
               style={{
                 padding: "18px 0",
-                borderBottom: `1px solid rgba(${THEME.accentRgb}, 0.12)`,
+                borderBottom: `1px solid rgba(${theme.accentRgb}, 0.12)`,
                 animation: `panelIn 0.3s ease ${i * 0.07}s both`,
               }}
             >
@@ -33,7 +37,7 @@ export default function QuestsPanel() {
                   style={{
                     fontFamily: "'Rajdhani', sans-serif",
                     fontSize: "16px",
-                    color: THEME.text.primary,
+                    color: theme.text.primary,
                     fontWeight: 700,
                     letterSpacing: "0.3px",
                   }}
@@ -58,10 +62,10 @@ export default function QuestsPanel() {
                     fontSize: "8px",
                     letterSpacing: "1.5px",
                     color:
-                      status === "COMPLETED" ? "#0e0e12" : THEME.text.primary,
+                      status === "COMPLETED" ? "#0e0e12" : theme.text.primary,
                     background:
                       status === "COMPLETED"
-                        ? THEME.accent
+                        ? theme.accent
                         : status === "IN PROGRESS"
                           ? "#444"
                           : "#555",
@@ -76,7 +80,7 @@ export default function QuestsPanel() {
               <p
                 style={{
                   fontSize: "13px",
-                  color: THEME.text.secondary,
+                  color: theme.text.secondary,
                   lineHeight: 1.65,
                   marginBottom: "10px",
                 }}
@@ -103,7 +107,7 @@ export default function QuestsPanel() {
                   style={{
                     fontFamily: "'Orbitron', sans-serif",
                     fontSize: "10px",
-                    color: THEME.accent,
+                    color: theme.accent,
                     letterSpacing: "2px",
                     fontWeight: 700,
                     flexShrink: 0,

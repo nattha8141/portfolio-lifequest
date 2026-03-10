@@ -7,9 +7,9 @@ import { useState } from "react";
 import {
   DOMAINS,
   AUDIT_UNIVERSE,
-  THEME,
   CHARACTER,
 } from "../config/portfolio.config";
+import { useTheme } from "../context/ThemeContext";
 import { SectionHeader, Tag } from "./PanelHelpers";
 
 const TIER_COLOR: Record<string, string> = {
@@ -45,6 +45,7 @@ function MindMap({
   activeDomain: string | null;
   setActiveDomain: (id: string | null) => void;
 }) {
+  const { theme } = useTheme();
   const CX = 260,
     CY = 260,
     ORBIT = 135,
@@ -76,7 +77,7 @@ function MindMap({
         style={{
           fontFamily: "'Orbitron', sans-serif",
           fontSize: "8px",
-          color: `rgba(${THEME.accentRgb}, 0.8)`,
+          color: `rgba(${theme.accentRgb}, 0.8)`,
           letterSpacing: "3px",
           marginBottom: "10px",
         }}
@@ -86,8 +87,8 @@ function MindMap({
       <svg width="100%" viewBox="0 0 520 540" style={{ maxHeight: "480px" }}>
         <defs>
           <radialGradient id="cg2" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor={THEME.accent} stopOpacity={0.12} />
-            <stop offset="100%" stopColor={THEME.accent} stopOpacity={0} />
+            <stop offset="0%" stopColor={theme.accent} stopOpacity={0.12} />
+            <stop offset="100%" stopColor={theme.accent} stopOpacity={0} />
           </radialGradient>
         </defs>
 
@@ -99,7 +100,7 @@ function MindMap({
             cy={CY}
             r={r}
             fill="none"
-            stroke={`rgba(${THEME.accentRgb}, 0.06)`}
+            stroke={`rgba(${theme.accentRgb}, 0.06)`}
             strokeWidth="1"
           />
         ))}
@@ -117,8 +118,8 @@ function MindMap({
               y2={p.y}
               stroke={
                 activeDomain === d.id
-                  ? `rgba(${THEME.accentRgb}, 0.5)`
-                  : `rgba(${THEME.accentRgb}, 0.12)`
+                  ? `rgba(${theme.accentRgb}, 0.5)`
+                  : `rgba(${theme.accentRgb}, 0.12)`
               }
               strokeWidth={activeDomain === d.id ? 1.5 : 1}
               strokeDasharray="3 4"
@@ -146,7 +147,7 @@ function MindMap({
                   y1={pp.y}
                   x2={cp.x}
                   y2={cp.y}
-                  stroke={`rgba(${THEME.accentRgb}, 0.35)`}
+                  stroke={`rgba(${theme.accentRgb}, 0.35)`}
                   strokeWidth="1"
                 />
                 <rect
@@ -155,15 +156,15 @@ function MindMap({
                   width="76"
                   height="22"
                   rx="2"
-                  fill={THEME.background.secondary}
-                  stroke={`rgba(${THEME.accentRgb}, 0.4)`}
+                  fill={theme.background.secondary}
+                  stroke={`rgba(${theme.accentRgb}, 0.4)`}
                   strokeWidth="0.8"
                 />
                 <text
                   x={cp.x}
                   y={cp.y + 4}
                   textAnchor="middle"
-                  fill="#4a4a4a"
+                  fill={theme.text.secondary}
                   fontSize="7.5"
                   fontFamily="Rajdhani, sans-serif"
                   fontWeight="600"
@@ -191,11 +192,11 @@ function MindMap({
                 r={isA ? 30 : 26}
                 fill={
                   isA
-                    ? `rgba(${THEME.accentRgb}, 0.12)`
-                    : THEME.background.secondary
+                    ? `rgba(${theme.accentRgb}, 0.12)`
+                    : theme.background.secondary
                 }
                 stroke={
-                  isA ? THEME.accent : `rgba(${THEME.accentRgb}, 0.35)`
+                  isA ? theme.accent : `rgba(${theme.accentRgb}, 0.35)`
                 }
                 strokeWidth={isA ? 1.5 : 1}
                 style={{ transition: "all 0.3s" }}
@@ -205,7 +206,7 @@ function MindMap({
                 y={p.y - 4}
                 textAnchor="middle"
                 fill={
-                  isA ? THEME.accent : `rgba(${THEME.accentRgb}, 0.7)`
+                  isA ? theme.accent : `rgba(${theme.accentRgb}, 0.7)`
                 }
                 fontSize="12"
               >
@@ -215,7 +216,7 @@ function MindMap({
                 x={p.x}
                 y={p.y + 10}
                 textAnchor="middle"
-                fill={isA ? "#1a1a1e" : "#7a7a80"}
+                fill={isA ? theme.text.primary : theme.text.muted}
                 fontSize="6"
                 fontFamily="Orbitron, sans-serif"
                 fontWeight="700"
@@ -232,8 +233,8 @@ function MindMap({
           cx={CX}
           cy={CY}
           r={38}
-          fill="#faf8f4"
-          stroke={THEME.accent}
+          fill={theme.background.secondary}
+          stroke={theme.accent}
           strokeWidth="1.5"
         />
         <circle
@@ -241,7 +242,7 @@ function MindMap({
           cy={CY}
           r={32}
           fill="none"
-          stroke={`rgba(${THEME.accentRgb}, 0.2)`}
+          stroke={`rgba(${theme.accentRgb}, 0.2)`}
           strokeWidth="1"
           strokeDasharray="2 3"
         />
@@ -249,7 +250,7 @@ function MindMap({
           x={CX}
           y={CY - 6}
           textAnchor="middle"
-          fill={THEME.accent}
+          fill={theme.accent}
           fontSize="7.5"
           fontFamily="Orbitron, sans-serif"
           fontWeight="700"
@@ -261,7 +262,7 @@ function MindMap({
           x={CX}
           y={CY + 5}
           textAnchor="middle"
-          fill="#1a1a1e"
+          fill={theme.text.secondary}
           fontSize="6"
           fontFamily="Orbitron, sans-serif"
           letterSpacing="0.8"
@@ -272,7 +273,7 @@ function MindMap({
           x={CX}
           y={CY + 14}
           textAnchor="middle"
-          fill="#1a1a1e"
+          fill={theme.text.secondary}
           fontSize="6"
           fontFamily="Orbitron, sans-serif"
           letterSpacing="0.8"
@@ -286,8 +287,8 @@ function MindMap({
           style={{
             marginTop: "8px",
             padding: "10px 14px",
-            border: `1px solid rgba(${THEME.accentRgb}, 0.4)`,
-            background: `rgba(${THEME.accentRgb}, 0.06)`,
+            border: `1px solid rgba(${theme.accentRgb}, 0.4)`,
+            background: `rgba(${theme.accentRgb}, 0.06)`,
             borderRadius: "4px",
           }}
         >
@@ -295,7 +296,7 @@ function MindMap({
             style={{
               fontFamily: "'Orbitron', sans-serif",
               fontSize: "8px",
-              color: THEME.accent,
+              color: theme.accent,
               letterSpacing: "3px",
               marginBottom: "5px",
             }}
@@ -305,7 +306,7 @@ function MindMap({
           <div
             style={{
               fontSize: "12px",
-              color: "#4a4a4a",
+              color: theme.text.secondary,
               letterSpacing: "0.5px",
             }}
           >
@@ -318,6 +319,7 @@ function MindMap({
 }
 
 export default function SkillsPanel() {
+  const { theme } = useTheme();
   const [activeDomain, setActiveDomain] = useState<string | null>(null);
 
   // Determine which audit universe card to highlight based on selected domain
@@ -347,10 +349,10 @@ export default function SkillsPanel() {
                 key={u.id}
                 style={{
                   padding: "14px",
-                  border: `1px solid ${isA ? THEME.accent : "rgba(180,150,80,0.25)"}`,
+                  border: `1px solid ${isA ? theme.accent : `rgba(${theme.accentRgb}, 0.25)`}`,
                   background: isA
-                    ? `rgba(${THEME.accentRgb}, 0.07)`
-                    : THEME.background.secondary,
+                    ? `rgba(${theme.accentRgb}, 0.07)`
+                    : theme.background.secondary,
                   borderRadius: "4px",
                   transition: "all 0.25s",
                   animation: `panelIn 0.3s ease ${idx * 0.06}s both`,
@@ -369,7 +371,7 @@ export default function SkillsPanel() {
                       style={{
                         fontFamily: "'Orbitron', sans-serif",
                         fontSize: "7px",
-                        color: "#7a7a80",
+                        color: theme.text.muted,
                         letterSpacing: "2px",
                         marginBottom: "3px",
                       }}
@@ -380,7 +382,7 @@ export default function SkillsPanel() {
                       style={{
                         fontFamily: "'Orbitron', sans-serif",
                         fontSize: "10px",
-                        color: "#1a1a1e",
+                        color: theme.text.primary,
                         letterSpacing: "1.5px",
                         fontWeight: 700,
                       }}
@@ -390,7 +392,7 @@ export default function SkillsPanel() {
                   </div>
                   <span
                     style={{
-                      color: THEME.accent,
+                      color: theme.accent,
                       opacity: 0.6,
                       fontSize: "16px",
                     }}
@@ -414,7 +416,7 @@ export default function SkillsPanel() {
                 <div
                   style={{
                     height: "1.5px",
-                    background: `rgba(${THEME.accentRgb}, 0.1)`,
+                    background: `rgba(${theme.accentRgb}, 0.1)`,
                     borderRadius: "1px",
                     margin: "8px 0",
                     overflow: "hidden",
@@ -437,7 +439,7 @@ export default function SkillsPanel() {
                     <span
                       style={{
                         fontSize: "10px",
-                        color: `rgba(${THEME.accentRgb}, 0.8)`,
+                        color: `rgba(${theme.accentRgb}, 0.8)`,
                         padding: "3px 4px",
                       }}
                     >
@@ -449,11 +451,11 @@ export default function SkillsPanel() {
                   <p
                     style={{
                       fontSize: "11px",
-                      color: "#4a4a4a",
+                      color: theme.text.secondary,
                       lineHeight: 1.6,
                       marginTop: "8px",
                       paddingTop: "8px",
-                      borderTop: "1px solid rgba(180,150,80,0.25)",
+                      borderTop: `1px solid rgba(${theme.accentRgb}, 0.25)`,
                     }}
                   >
                     {u.desc}

@@ -1,17 +1,21 @@
 // ─── Profile Panel ──────────────────────────────────────────
 // About bio, traits, experience timeline, education timeline.
 
-import { PROFILE, THEME } from "../config/portfolio.config";
+"use client";
+
+import { PROFILE } from "../config/portfolio.config";
+import { useTheme } from "../context/ThemeContext";
 import { SectionHeader, Tag } from "./PanelHelpers";
 
 export default function ProfilePanel() {
+  const { theme } = useTheme();
   return (
     <div>
       <SectionHeader label="ABOUT" />
       <p
         style={{
           fontSize: "14px",
-          color: THEME.text.secondary,
+          color: theme.text.secondary,
           lineHeight: 1.75,
           marginBottom: "18px",
         }}
@@ -39,7 +43,7 @@ export default function ProfilePanel() {
             top: 8,
             bottom: 8,
             width: "1px",
-            background: `linear-gradient(180deg, ${THEME.accent}, rgba(${THEME.accentRgb}, 0.15))`,
+            background: `linear-gradient(180deg, ${theme.accent}, rgba(${theme.accentRgb}, 0.15))`,
           }}
         />
         {PROFILE.experience.map((e, i) => (
@@ -54,16 +58,16 @@ export default function ProfilePanel() {
                 top: "6px",
                 width: 8,
                 height: 8,
-                background: THEME.accent,
+                background: theme.accent,
                 borderRadius: "50%",
-                border: `2px solid ${THEME.panel}`,
+                border: `2px solid ${theme.panel}`,
               }}
             />
             <div
               style={{
                 fontFamily: "'Orbitron', sans-serif",
                 fontSize: "7px",
-                color: `rgba(${THEME.accentRgb}, 0.8)`,
+                color: `rgba(${theme.accentRgb}, 0.8)`,
                 letterSpacing: "2px",
                 marginBottom: "3px",
               }}
@@ -74,7 +78,7 @@ export default function ProfilePanel() {
               style={{
                 fontFamily: "'Rajdhani', sans-serif",
                 fontSize: "14px",
-                color: THEME.text.primary,
+                color: theme.text.primary,
                 fontWeight: 700,
                 marginBottom: "2px",
                 letterSpacing: "0.3px",
@@ -85,7 +89,7 @@ export default function ProfilePanel() {
             <div
               style={{
                 fontSize: "12px",
-                color: THEME.accent,
+                color: theme.accent,
                 marginBottom: "8px",
                 letterSpacing: "0.5px",
                 fontWeight: 600,
@@ -96,7 +100,7 @@ export default function ProfilePanel() {
             <p
               style={{
                 fontSize: "13px",
-                color: THEME.text.secondary,
+                color: theme.text.secondary,
                 lineHeight: 1.65,
                 margin: 0,
               }}
@@ -116,7 +120,7 @@ export default function ProfilePanel() {
             top: 8,
             bottom: 8,
             width: "1px",
-            background: `linear-gradient(180deg, ${THEME.accent}, rgba(${THEME.accentRgb}, 0.15))`,
+            background: `linear-gradient(180deg, ${theme.accent}, rgba(${theme.accentRgb}, 0.15))`,
           }}
         />
         {PROFILE.education.map((e, i) => (
@@ -131,16 +135,16 @@ export default function ProfilePanel() {
                 top: "6px",
                 width: 8,
                 height: 8,
-                background: THEME.accent,
+                background: theme.accent,
                 borderRadius: "50%",
-                border: `2px solid ${THEME.panel}`,
+                border: `2px solid ${theme.panel}`,
               }}
             />
             <div
               style={{
                 fontFamily: "'Orbitron', sans-serif",
                 fontSize: "7px",
-                color: `rgba(${THEME.accentRgb}, 0.8)`,
+                color: `rgba(${theme.accentRgb}, 0.8)`,
                 letterSpacing: "2px",
                 marginBottom: "3px",
               }}
@@ -151,7 +155,7 @@ export default function ProfilePanel() {
               style={{
                 fontFamily: "'Rajdhani', sans-serif",
                 fontSize: "14px",
-                color: THEME.text.primary,
+                color: theme.text.primary,
                 fontWeight: 700,
                 marginBottom: "2px",
               }}
@@ -161,7 +165,7 @@ export default function ProfilePanel() {
             <div
               style={{
                 fontSize: "12px",
-                color: THEME.accent,
+                color: theme.accent,
                 fontWeight: 600,
               }}
             >
